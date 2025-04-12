@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fund Finder</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #8EC5FC, #E0C3FC);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background-color: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4B0082;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 2px solid #cccccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #6A5ACD;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #483D8B;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #F0F8FF;
+            border-left: 6px solid #6A5ACD;
+            border-radius: 8px;
+        }
+
+        .score {
+            font-weight: bold;
+            color: #2F4F4F;
+        }
+
+        .explanation {
+            font-size: 14px;
+            color: #333;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Fund Finder</h1>
+        <form method="POST">
+            <input type="text" name="query" placeholder="Enter your query..." required>
+            <button type="submit">Find Best Match</button>
+        </form>
+
+        {% if result %}
+        <div class="result">
+            {% if result is string %}
+                <p>{{ result }}</p>
+            {% else %}
+                <p><strong>Top Match:</strong> {{ result.name }}</p>
+                <ul>
+                    <li><strong>Type:</strong> {{ result.metadata.type }}</li>
+                    <li><strong>Category:</strong> {{ result.metadata.category }}</li>
+                    <li><strong>Sector:</strong> {{ result.metadata.sector }}</li>
+                    <li><strong>Description:</strong> {{ result.metadata.description }}</li>
+                </ul>
+                <p class="score">Matching Score: {{ result.score }}</p>
+            {% endif %}
+            
+            {% if explanation %}
+            <div class="explanation">
+                <strong>Why this fund?</strong><br>
+                {{ explanation|safe }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

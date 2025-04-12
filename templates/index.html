@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Find My Fund</title>
+</head>
+<body>
+    <h1>LLM: Find My Fund</h1>
+    <form method="post">
+        <input type="text" name="query" placeholder="e.g. SBI tech growth">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if results %}
+        <h3>Top Matches:</h3>
+        <ul>
+            {% for result in results %}
+                <li>
+                    <strong>{{ result.name }}</strong><br>
+                    Category: {{ result.category }}<br>
+                    Type: {{ result.type }}<br>
+                    Confidence: {{ result.score | round(2) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
